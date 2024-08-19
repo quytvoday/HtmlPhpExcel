@@ -226,6 +226,8 @@ class HtmlPhpExcel
                         if ($colspan) {$colspan = $colspan - 1;}
                         if ($rowspan) {$rowspan = $rowspan - 1;}
                         $mergeCellsTargetCellIndex = Coordinate::stringFromColumnIndex($cellNumber + $colspan).($rowNumber + $rowspan);
+                        $excelWorksheet->getStyle($excelCellIndex)->applyFromArray($this->getCellStylesArray($cell));
+                        $excelWorksheet->getStyle($mergeCellsTargetCellIndex)->applyFromArray($this->getCellStylesArray($cell));
                         $excelWorksheet->mergeCells($excelCellIndex.':'.$mergeCellsTargetCellIndex);
                     }
 
