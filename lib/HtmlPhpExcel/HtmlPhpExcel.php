@@ -226,8 +226,25 @@ class HtmlPhpExcel
                         if ($colspan) {$colspan = $colspan - 1;}
                         if ($rowspan) {$rowspan = $rowspan - 1;}
                         $mergeCellsTargetCellIndex = Coordinate::stringFromColumnIndex($cellNumber + $colspan).($rowNumber + $rowspan);
-                        $excelWorksheet->getStyle($excelCellIndex)->applyFromArray($this->getCellStylesArray($cell));
-                        $excelWorksheet->getStyle($mergeCellsTargetCellIndex)->applyFromArray($this->getCellStylesArray($cell));
+
+                        /**
+                         * Auth:    quytvoday@gmail.com
+                         * Des:     Fix bug merge cell
+                         */
+                        $startLetter = $excelCellIndex[0];
+                        $startNumber = substr($excelCellIndex, 1);
+                        $endLetter = $mergeCellsTargetCellIndex[0];
+                        $endNumber = substr($mergeCellsTargetCellIndex, 1);
+
+                        $startIndex = ord($startLetter);
+                        $endIndex = ord($endLetter);
+
+                        for ($i = $startIndex; $i <= $endIndex; $i++) {
+                            $letter = chr($i);
+                            $excelWorksheet->getStyle($letter.$startNumber)->applyFromArray($this->getCellStylesArray($cell));
+                            $excelWorksheet->getStyle($letter.$endNumber)->applyFromArray($this->getCellStylesArray($cell));
+                        }
+
                         $excelWorksheet->mergeCells($excelCellIndex.':'.$mergeCellsTargetCellIndex);
                     }
 
