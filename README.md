@@ -10,7 +10,7 @@ This is a php library based on [PhpSpreadsheet](https://github.com/PHPOffice/Php
 Add HtmlPhpExcel to your composer.json:
 
 ```
-composer require ticketpark/htmlphpexcel
+composer require quytvoday/htmlphpexcel
 ```
 
 
